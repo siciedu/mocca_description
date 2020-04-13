@@ -3,6 +3,9 @@
   <xacro:property name="obj_scale" value="0.001 0.001 0.001" />
   <xacro:property name="pkg_path" value='$(find mocca_description)' />
 
+
+  <xacro:property name="convert_command" value='xacro --inorder mocca.xacro > mocca.urdf' />
+
   <material name="Brown">
     <color rgba="0.4823 0.3843 0.2666 1"/>
   </material>
@@ -34,11 +37,12 @@
     </visual>
   </link>
   <!-- NECK START-->
-  <joint name="joint_neck_yaw" type="continuous">
+  <joint name="joint_head_yaw" type="revolute">
     <parent link="base_link"/>
     <child link="link_neck_yaw"/>
     <axis rpy="0 0 0" xyz="0 0 1"/>
     <origin rpy="0 0 0" xyz="-0.02 0 0.195"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_neck_yaw">
     <visual>
@@ -78,11 +82,12 @@
     </visual>
   </link>
 
-  <joint name="joint_head_pitch" type="continuous">
+  <joint name="joint_head_pitch" type="revolute">
     <parent link="link_neck_upper"/>
     <child link="link_head_pitch"/>
     <axis xyz="0 1 0"/>
     <origin rpy="0 0 0" xyz="0 0 0"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_head_pitch">
     <visual>
@@ -109,11 +114,12 @@
   </link>
 
   <!-- ARM RIGHT START-->
-  <joint name="joint_right_1" type="continuous">
+  <joint name="joint_right_1" type="revolute">
     <parent link="base_link"/>
     <child link="link_right_shoulder"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0.013 -0.08 0.14"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
 
   <link name="link_right_shoulder">
@@ -126,11 +132,12 @@
     </visual>
   </link>
 
-  <joint name="joint_right_2" type="continuous">
+  <joint name="joint_right_2" type="revolute">
     <parent link="link_right_shoulder"/>
     <child link="link_right_upper"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 -0.03 0.0"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_right_upper">
     <visual>
@@ -141,26 +148,12 @@
       <material name="Brown"/>
     </visual>
   </link>
-<!--   <joint name="joint_right_2_extra" type="fixed">
-    <parent link="link_right_upper"/>
-    <child link="link_right_upper2"/>
-    <origin xyz="0 0 0"/>
-  </joint>
-  <link name="link_right_upper2">
-    <visual>
-      <geometry>
-	<mesh filename="file://${pkg_path}/meshes/MC_ARM_Upper.stl" scale='${obj_scale}'/>
-      </geometry>
-      <origin rpy="0 3.14 0" xyz="0 0 0"/>
-      <material name="Brown"/>
-    </visual>
-  </link>
- -->
-  <joint name="joint_right_3" type="continuous">
+  <joint name="joint_right_3" type="revolute">
     <parent link="link_right_upper"/>
     <child link="link_right_lower"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 -0.06 0.0"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_right_lower">
     <visual>
@@ -171,21 +164,6 @@
       <material name="Brown"/>
     </visual>
   </link>
-<!--   <joint name="joint_right_3_extra" type="fixed">
-    <parent link="link_right_lower"/>
-    <child link="link_right_lower2"/>
-    <origin xyz="0 0 0"/>
-  </joint>
-  <link name="link_right_lower2">
-    <visual>
-      <geometry>
-	<mesh filename="file://${pkg_path}/meshes/MC_ARM_Lower.stl" scale='${obj_scale}'/>
-      </geometry>
-      <origin rpy="0 3.14 0" xyz="0 0 0"/>
-      <material name="Brown"/>
-    </visual>
-  </link>
- -->
   <joint name="joint_right_fist" type="fixed">
     <parent link="link_right_lower"/>
     <child link="link_right_fist"/>
@@ -202,11 +180,12 @@
   </link>
 
   <!-- ARM LEFT START-->
-  <joint name="joint_left_1" type="continuous">
+  <joint name="joint_left_1" type="revolute">
     <parent link="base_link"/>
     <child link="link_left_shoulder"/>
     <axis xyz="0 1 0"/>
     <origin xyz="0.013 0.08 0.14"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_left_shoulder">
     <visual>
@@ -218,11 +197,12 @@
     </visual>
   </link>
 
-  <joint name="joint_left_2" type="continuous">
+  <joint name="joint_left_2" type="revolute">
     <parent link="link_left_shoulder"/>
     <child link="link_left_upper"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0.03 0.0"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_left_upper">
     <visual>
@@ -233,26 +213,12 @@
       <material name="Brown"/>
     </visual>
   </link>
-<!--   <joint name="joint_left_2_extra" type="fixed">
-    <parent link="link_left_upper"/>
-    <child link="link_left_upper2"/>
-    <origin xyz="0 0 0"/>
-  </joint>
-  <link name="link_left_upper2">
-    <visual>
-      <geometry>
-	<mesh filename="file://${pkg_path}/meshes/MC_ARM_Upper.stl" scale='${obj_scale}'/>
-      </geometry>
-      <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
-      <material name="Brown"/>
-    </visual>
-  </link>
- -->
-  <joint name="joint_left_3" type="continuous">
+  <joint name="joint_left_3" type="revolute">
     <parent link="link_left_upper"/>
     <child link="link_left_lower"/>
     <axis xyz="0 0 1"/>
     <origin xyz="0 0.06 0.0"/>
+    <limit effort="1000.0" lower="-1.57" upper="1.57" velocity="0.5"/>
   </joint>
   <link name="link_left_lower">
     <visual>
@@ -263,21 +229,6 @@
       <material name="Brown"/>
     </visual>
   </link>
-<!--   <joint name="joint_left_3_extra" type="fixed">
-    <parent link="link_left_lower"/>
-    <child link="link_left_lower2"/>
-    <origin xyz="0 0 0"/>
-  </joint>
-  <link name="link_left_lower2">
-    <visual>
-      <geometry>
-	<mesh filename="file://${pkg_path}/meshes/MC_ARM_Lower.stl" scale='${obj_scale}'/>
-      </geometry>
-      <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
-      <material name="Brown"/>
-    </visual>
-  </link>
- -->
   <joint name="joint_left_fist" type="fixed">
     <parent link="link_left_lower"/>
     <child link="link_left_fist"/>
